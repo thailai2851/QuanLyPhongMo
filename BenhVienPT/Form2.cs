@@ -143,7 +143,7 @@ namespace BenhVienPT
 
         private void btnChiTiet_Click(object sender, EventArgs e)
         {
-
+             
         }
     }
 }
