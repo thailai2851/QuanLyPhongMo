@@ -7,25 +7,20 @@ using System.Collections.Generic;
 
 namespace BenhVienPT.Models
 {
-    public partial class BenhAn
+    public partial class PhongHoiTinh
     {
-        public BenhAn()
+        public PhongHoiTinh()
         {
             CaMo = new HashSet<CaMo>();
-            ChiTietBenhAn = new HashSet<ChiTietBenhAn>();
         }
 
         public int Id { get; set; }
-        public string MaBenhAn { get; set; }
-        public int? IdbenhNhan { get; set; }
-        public int? Idnv { get; set; }
-        public string GhiChu { get; set; }
+        public string MaPhongHt { get; set; }
+        public string TenPhong { get; set; }
         public bool? TrangThai { get; set; }
-        public string Ylenh { get; set; }
+        public int? Idnv { get; set; }
 
-        public virtual BenhNhan IdbenhNhanNavigation { get; set; }
         public virtual NhanVien IdnvNavigation { get; set; }
         public virtual ICollection<CaMo> CaMo { get; set; }
-        public virtual ICollection<ChiTietBenhAn> ChiTietBenhAn { get; set; }
     }
 }

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "cXFo60T04hQWsFrUZrnkn+hCHorDT0tPH+DcHO2jgJH8Sf2vxNKLr3aoluaHzQncI09Emhq1r7s74OCscUWRAg==",
+  "dgSpecHash": "VCj9WVItYMRiUmoLaLfNLaJa0JpPZZk/dea433wjtJoKv2/mOuToFrbhzX5v7/T7Tfg1gyHiAcidERJTAh+Jew==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Admin\\source\\repos\\BenhVienPT\\BenhVienPT\\BenhVienPT.csproj",
+  "projectFilePath": "C:\\Users\\Admin\\Documents\\TaiLieuNam4_HK2\\BMMMT và HT\\BenhVienPT\\BenhVienPT\\BenhVienPT.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Admin\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.1\\microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\microsoft.bcl.hashcode\\1.1.1\\microsoft.bcl.hashcode.1.1.1.nupkg.sha512",

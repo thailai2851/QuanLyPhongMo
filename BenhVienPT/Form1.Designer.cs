@@ -79,13 +79,16 @@ namespace BenhVienPT
             // 
             // label2
             // 
+            this.label2.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Times New Roman", 22.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label2.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.label2.Location = new System.Drawing.Point(55, 27);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(243, 42);
             this.label2.TabIndex = 4;
             this.label2.Text = "ĐĂNG NHẬP";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // btnThoat
             // 
@@ -104,20 +107,19 @@ namespace BenhVienPT
             this.AcceptButton = this.btnDangNhap;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoValidate = System.Windows.Forms.AutoValidate.EnablePreventFocusChange;
-            this.BackColor = System.Drawing.SystemColors.Menu;
+            this.BackColor = System.Drawing.Color.White;
             this.CancelButton = this.btnThoat;
-            this.ClientSize = new System.Drawing.Size(345, 335);
+            this.ClientSize = new System.Drawing.Size(346, 335);
             this.Controls.Add(this.btnThoat);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.txtPass);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtName);
             this.Controls.Add(this.btnDangNhap);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "FormDangNhap";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Form1";
+            this.Text = "Đăng nhập";
             this.Load += new System.EventHandler(this.FormDangNhap_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

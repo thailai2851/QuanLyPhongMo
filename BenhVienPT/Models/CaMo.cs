@@ -9,11 +9,22 @@ namespace BenhVienPT.Models
 {
     public partial class CaMo
     {
+        public CaMo()
+        {
+            NhanVien = new HashSet<NhanVien>();
+        }
+
         public int Id { get; set; }
         public string MaCaMo { get; set; }
         public string TenCaMo { get; set; }
-        public DateTime? ThoiGian { get; set; }
-        public int? Idnv { get; set; }
-        public int? Idbenh { get; set; }
+        public bool? TinhTrang { get; set; }
+        public int? IdphongMo { get; set; }
+        public int? IdbenhAn { get; set; }
+        public int? IdphongHoiTinh { get; set; }
+
+        public virtual BenhAn IdbenhAnNavigation { get; set; }
+        public virtual PhongHoiTinh IdphongHoiTinhNavigation { get; set; }
+        public virtual PhongMo IdphongMoNavigation { get; set; }
+        public virtual ICollection<NhanVien> NhanVien { get; set; }
     }
 }
