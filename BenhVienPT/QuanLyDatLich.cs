@@ -14,7 +14,7 @@ namespace BenhVienPT
     public partial class FormDatLich : Form
     {
         //kết nối 
-        static String connString = @"Data Source=LAPTOP-VIEL6S6A\THAILAI;Initial Catalog=WebBenhVienPT;Integrated Security=True";
+        static String connString = @"Data Source=TRANUY\SQLEXPRESS;Initial Catalog=WebBenhVienPT;User ID=sa;Password=123";
         //khai báo
         SqlConnection sqlconnection = new SqlConnection(connString);
         SqlCommand sqlcommand;
@@ -44,6 +44,7 @@ namespace BenhVienPT
         public FormDatLich(Models.TaiKhoan acc)
         {
             InitializeComponent();
+            this.acc = acc;
         }
 
         private void FormChiTiet_Load(object sender, EventArgs e)
@@ -169,9 +170,12 @@ namespace BenhVienPT
                 cbxPhongMo.Items.Clear();
 
                 HienThiDSPhongMo(idbenh,dinhdang);
+                textBoxidb.Clear();
+                textBoxidb.Text = idbenh;
 
-                cbxCaMo.SelectedIndex = -1;
+                    cbxCaMo.SelectedIndex = -1;
             }
+           
 
             if (livDatLich.SelectedItems.Count == 0) return;
             ListViewItem lvi = livDatLich.SelectedItems[0];
@@ -216,9 +220,11 @@ namespace BenhVienPT
 
         private void dtpTGDatLich_ValueChanged(object sender, EventArgs e)
         {
+            dtpTGDatLich.MinDate = DateTime.Today;
             DateTime TGDatLich1 = dtpTGDatLich.Value.Date;
             string dinhdang = TGDatLich1.ToString("yyyy-MM-dd");
             int selectedID = 0;
+            string idbenh = textBoxidb.Text;
             object selectedItem = cbxPhongMo.SelectedItem;
             if (selectedItem != null)
             {
@@ -226,6 +232,16 @@ namespace BenhVienPT
                 selectedID = Convert.ToInt32(row["IDPM"]);
                 HienThiDSCaMo(selectedID, dinhdang);
             }
+            if (idbenh != null)
+            {
+                HienThiDSPhongMo(idbenh, dinhdang);
+            }
+            else
+            {
+                HienThiDSPhongMo("", dinhdang);
+
+            }
+
         }
 
         private void cbxCaMo_SelectedIndexChanged(object sender, EventArgs e)
@@ -268,15 +284,12 @@ namespace BenhVienPT
                 Openconn();
 
                 // Khai báo đối tượng SqlCommand
-                string queryBacSi = "select nv.TenNV from lichtruc as l inner join nhanvien nv on nv.id = l.idnv where l.NgayTruc = @NgayTruc and l.IDTGMo = @IDTGMo and l.TrangThai = 0 and idvt = 4";
+                string queryBacSi = "select nv.TenNV from lichtruc as l  inner join nhanvien nv on nv.id = l.idnv inner join taikhoan tk on tk.ID =nv.IDTaiKhoan inner join VaiTro vt on vt.ID = tk.IDVaiTro where l.NgayTruc = @NgayTruc and l.IDTGMo = @IDTGMo and l.TrangThai = 0 and vt.id = 4";
                 SqlCommand cmdBacSi = new SqlCommand(queryBacSi, sqlconnection);
                 cmdBacSi.Parameters.AddWithValue("@NgayTruc", dinhdang);
                 cmdBacSi.Parameters.AddWithValue("@IDTGMo", selectedIDCM);
 
-                string queryYta = "select nv.TenNV from lichtruc as l inner join nhanvien nv on nv.id = l.idnv where l.NgayTruc = @NgayTruc and l.IDTGMo = @IDTGMo and l.TrangThai = 0 and idvt = 2";
-                SqlCommand cmdYta = new SqlCommand(queryYta, sqlconnection);
-                cmdYta.Parameters.AddWithValue("@NgayTruc", dinhdang);
-                cmdYta.Parameters.AddWithValue("@IDTGMo", selectedIDCM);
+                
 
                 // Khai báo đối tượng SqlDataReader
                 using (SqlDataReader readerBacSi = cmdBacSi.ExecuteReader())
@@ -291,7 +304,10 @@ namespace BenhVienPT
                     // Gán danh sách các record vào DataSource của CheckedListBox
                     cklBacSi.DataSource = recordsBacSi;
                 }
-
+                string queryYta = "select nv.TenNV from lichtruc as l  inner join nhanvien nv on nv.id = l.idnv inner join taikhoan tk on tk.ID =nv.IDTaiKhoan inner join VaiTro vt on vt.ID = tk.IDVaiTro where l.NgayTruc = @NgayTruc and l.IDTGMo = @IDTGMo and l.TrangThai = 0 and vt.id = 2";
+                SqlCommand cmdYta = new SqlCommand(queryYta, sqlconnection);
+                cmdYta.Parameters.AddWithValue("@NgayTruc", dinhdang);
+                cmdYta.Parameters.AddWithValue("@IDTGMo", selectedIDCM);
                 using (SqlDataReader readerYta = cmdYta.ExecuteReader())
                 {
                     // Đọc dữ liệu từ SqlDataReader và thêm vào danh sách records
@@ -545,7 +561,15 @@ namespace BenhVienPT
             HienThiDSBADatLich();
         }
 
-      
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cklBacSi_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
     
 }

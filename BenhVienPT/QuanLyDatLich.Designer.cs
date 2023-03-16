@@ -45,6 +45,7 @@ namespace BenhVienPT
             this.TrangThai = new System.Windows.Forms.ColumnHeader();
             this.panel3 = new System.Windows.Forms.Panel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.textBoxidb = new System.Windows.Forms.TextBox();
             this.btnThoat = new System.Windows.Forms.Button();
             this.label9 = new System.Windows.Forms.Label();
             this.cbxPhongHoiTinh = new System.Windows.Forms.ComboBox();
@@ -119,6 +120,7 @@ namespace BenhVienPT
             this.groupBox2.Controls.Add(this.livDatLich);
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox2.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.groupBox2.ForeColor = System.Drawing.Color.Brown;
             this.groupBox2.Location = new System.Drawing.Point(0, 0);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(660, 597);
@@ -185,7 +187,7 @@ namespace BenhVienPT
             // TenBN
             // 
             this.TenBN.Text = "Tên bệnh nhân";
-            this.TenBN.Width = 150;
+            this.TenBN.Width = 200;
             // 
             // TenB
             // 
@@ -200,7 +202,7 @@ namespace BenhVienPT
             // TrangThai
             // 
             this.TrangThai.Text = "Trạng thái";
-            this.TrangThai.Width = 120;
+            this.TrangThai.Width = 100;
             // 
             // panel3
             // 
@@ -213,6 +215,7 @@ namespace BenhVienPT
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.textBoxidb);
             this.groupBox1.Controls.Add(this.btnThoat);
             this.groupBox1.Controls.Add(this.label9);
             this.groupBox1.Controls.Add(this.cbxPhongHoiTinh);
@@ -233,18 +236,29 @@ namespace BenhVienPT
             this.groupBox1.Controls.Add(this.dtpTGDatLich);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox1.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.groupBox1.ForeColor = System.Drawing.Color.Brown;
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(511, 597);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Thông tin đặt lịch";
+            this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
+            // 
+            // textBoxidb
+            // 
+            this.textBoxidb.Location = new System.Drawing.Point(38, 43);
+            this.textBoxidb.Name = "textBoxidb";
+            this.textBoxidb.Size = new System.Drawing.Size(63, 30);
+            this.textBoxidb.TabIndex = 17;
+            this.textBoxidb.Visible = false;
             // 
             // btnThoat
             // 
             this.btnThoat.BackColor = System.Drawing.SystemColors.Control;
             this.btnThoat.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnThoat.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btnThoat.ForeColor = System.Drawing.Color.Black;
             this.btnThoat.Location = new System.Drawing.Point(356, 521);
             this.btnThoat.Name = "btnThoat";
             this.btnThoat.Size = new System.Drawing.Size(131, 54);
@@ -256,6 +270,7 @@ namespace BenhVienPT
             // label9
             // 
             this.label9.AutoSize = true;
+            this.label9.ForeColor = System.Drawing.Color.Black;
             this.label9.Location = new System.Drawing.Point(34, 473);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(128, 22);
@@ -264,6 +279,7 @@ namespace BenhVienPT
             // 
             // cbxPhongHoiTinh
             // 
+            this.cbxPhongHoiTinh.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.cbxPhongHoiTinh.FormattingEnabled = true;
             this.cbxPhongHoiTinh.Location = new System.Drawing.Point(188, 469);
             this.cbxPhongHoiTinh.Name = "cbxPhongHoiTinh";
@@ -272,11 +288,12 @@ namespace BenhVienPT
             // 
             // cklYta
             // 
+            this.cklYta.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.cklYta.Cursor = System.Windows.Forms.Cursors.Hand;
             this.cklYta.FormattingEnabled = true;
             this.cklYta.Location = new System.Drawing.Point(188, 371);
             this.cklYta.Name = "cklYta";
-            this.cklYta.Size = new System.Drawing.Size(299, 79);
+            this.cklYta.Size = new System.Drawing.Size(299, 75);
             this.cklYta.TabIndex = 13;
             // 
             // btnluu
@@ -284,7 +301,7 @@ namespace BenhVienPT
             this.btnluu.BackColor = System.Drawing.Color.LightSeaGreen;
             this.btnluu.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnluu.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.btnluu.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
+            this.btnluu.ForeColor = System.Drawing.Color.White;
             this.btnluu.Location = new System.Drawing.Point(188, 521);
             this.btnluu.Name = "btnluu";
             this.btnluu.Size = new System.Drawing.Size(162, 54);
@@ -299,10 +316,10 @@ namespace BenhVienPT
             this.txtTenBN.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtTenBN.Font = new System.Drawing.Font("Times New Roman", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.txtTenBN.ForeColor = System.Drawing.Color.Navy;
-            this.txtTenBN.Location = new System.Drawing.Point(333, 61);
+            this.txtTenBN.Location = new System.Drawing.Point(280, 63);
             this.txtTenBN.Name = "txtTenBN";
             this.txtTenBN.ReadOnly = true;
-            this.txtTenBN.Size = new System.Drawing.Size(154, 27);
+            this.txtTenBN.Size = new System.Drawing.Size(207, 27);
             this.txtTenBN.TabIndex = 11;
             // 
             // label8
@@ -310,7 +327,7 @@ namespace BenhVienPT
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.label8.ForeColor = System.Drawing.Color.Brown;
-            this.label8.Location = new System.Drawing.Point(188, 63);
+            this.label8.Location = new System.Drawing.Point(135, 65);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(139, 23);
             this.label8.TabIndex = 10;
@@ -318,12 +335,14 @@ namespace BenhVienPT
             // 
             // cklBacSi
             // 
+            this.cklBacSi.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.cklBacSi.Cursor = System.Windows.Forms.Cursors.Hand;
             this.cklBacSi.FormattingEnabled = true;
             this.cklBacSi.Location = new System.Drawing.Point(188, 274);
             this.cklBacSi.Name = "cklBacSi";
-            this.cklBacSi.Size = new System.Drawing.Size(299, 79);
+            this.cklBacSi.Size = new System.Drawing.Size(299, 75);
             this.cklBacSi.TabIndex = 9;
+            this.cklBacSi.SelectedIndexChanged += new System.EventHandler(this.cklBacSi_SelectedIndexChanged);
             // 
             // txtMaBA
             // 
@@ -331,15 +350,16 @@ namespace BenhVienPT
             this.txtMaBA.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtMaBA.Font = new System.Drawing.Font("Times New Roman", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.txtMaBA.ForeColor = System.Drawing.Color.Navy;
-            this.txtMaBA.Location = new System.Drawing.Point(333, 24);
+            this.txtMaBA.Location = new System.Drawing.Point(280, 26);
             this.txtMaBA.Name = "txtMaBA";
             this.txtMaBA.ReadOnly = true;
-            this.txtMaBA.Size = new System.Drawing.Size(154, 27);
+            this.txtMaBA.Size = new System.Drawing.Size(207, 27);
             this.txtMaBA.TabIndex = 8;
             // 
             // label6
             // 
             this.label6.AutoSize = true;
+            this.label6.ForeColor = System.Drawing.Color.Black;
             this.label6.Location = new System.Drawing.Point(34, 371);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(48, 22);
@@ -349,6 +369,7 @@ namespace BenhVienPT
             // label5
             // 
             this.label5.AutoSize = true;
+            this.label5.ForeColor = System.Drawing.Color.Black;
             this.label5.Location = new System.Drawing.Point(34, 223);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(67, 22);
@@ -358,6 +379,7 @@ namespace BenhVienPT
             // label4
             // 
             this.label4.AutoSize = true;
+            this.label4.ForeColor = System.Drawing.Color.Black;
             this.label4.Location = new System.Drawing.Point(34, 165);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(93, 22);
@@ -367,6 +389,7 @@ namespace BenhVienPT
             // label3
             // 
             this.label3.AutoSize = true;
+            this.label3.ForeColor = System.Drawing.Color.Black;
             this.label3.Location = new System.Drawing.Point(34, 274);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(66, 22);
@@ -378,7 +401,7 @@ namespace BenhVienPT
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.label7.ForeColor = System.Drawing.Color.Brown;
-            this.label7.Location = new System.Drawing.Point(188, 26);
+            this.label7.Location = new System.Drawing.Point(135, 28);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(115, 23);
             this.label7.TabIndex = 7;
@@ -387,6 +410,7 @@ namespace BenhVienPT
             // label2
             // 
             this.label2.AutoSize = true;
+            this.label2.ForeColor = System.Drawing.Color.Black;
             this.label2.Location = new System.Drawing.Point(34, 107);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(92, 22);
@@ -395,6 +419,7 @@ namespace BenhVienPT
             // 
             // cbxCaMo
             // 
+            this.cbxCaMo.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.cbxCaMo.FormattingEnabled = true;
             this.cbxCaMo.Location = new System.Drawing.Point(188, 219);
             this.cbxCaMo.Name = "cbxCaMo";
@@ -404,6 +429,7 @@ namespace BenhVienPT
             // 
             // cbxPhongMo
             // 
+            this.cbxPhongMo.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.cbxPhongMo.FormattingEnabled = true;
             this.cbxPhongMo.Location = new System.Drawing.Point(188, 160);
             this.cbxPhongMo.Name = "cbxPhongMo";
@@ -413,12 +439,13 @@ namespace BenhVienPT
             // 
             // dtpTGDatLich
             // 
-            this.dtpTGDatLich.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpTGDatLich.CustomFormat = "dd/MM/yyyy";
+            this.dtpTGDatLich.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dtpTGDatLich.Location = new System.Drawing.Point(188, 101);
             this.dtpTGDatLich.Name = "dtpTGDatLich";
             this.dtpTGDatLich.Size = new System.Drawing.Size(299, 30);
             this.dtpTGDatLich.TabIndex = 0;
-            this.dtpTGDatLich.Value = new System.DateTime(2023, 3, 3, 0, 0, 0, 0);
+            this.dtpTGDatLich.Value = new System.DateTime(2023, 3, 16, 0, 0, 0, 0);
             this.dtpTGDatLich.ValueChanged += new System.EventHandler(this.dtpTGDatLich_ValueChanged);
             // 
             // FormDatLich
@@ -480,5 +507,6 @@ namespace BenhVienPT
         private System.Windows.Forms.ColumnHeader TenB;
         private System.Windows.Forms.ColumnHeader MucDo;
         private System.Windows.Forms.ColumnHeader TrangThai;
+        private System.Windows.Forms.TextBox textBoxidb;
     }
 }

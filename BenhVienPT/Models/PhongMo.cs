@@ -11,24 +11,21 @@ namespace BenhVienPT.Models
     {
         public PhongMo()
         {
-            Benh = new HashSet<Benh>();
             CaMo = new HashSet<CaMo>();
-            Tgmo = new HashSet<Tgmo>();
-            VatTuYte = new HashSet<VatTuYte>();
+            ChiTietPhongBenh = new HashSet<ChiTietPhongBenh>();
+            ChiTietPhongMo = new HashSet<ChiTietPhongMo>();
+            ChiTietVatTu = new HashSet<ChiTietVatTu>();
         }
 
         public int Id { get; set; }
         public string MaPhongMo { get; set; }
         public string TenPhongMo { get; set; }
-        public string TrangThai { get; set; }
+        public bool? TrangThai { get; set; }
         public string Loai { get; set; }
-        public DateTime? Ngay { get; set; }
-        public int? Idnv { get; set; }
 
-        public virtual NhanVien IdnvNavigation { get; set; }
-        public virtual ICollection<Benh> Benh { get; set; }
         public virtual ICollection<CaMo> CaMo { get; set; }
-        public virtual ICollection<Tgmo> Tgmo { get; set; }
-        public virtual ICollection<VatTuYte> VatTuYte { get; set; }
+        public virtual ICollection<ChiTietPhongBenh> ChiTietPhongBenh { get; set; }
+        public virtual ICollection<ChiTietPhongMo> ChiTietPhongMo { get; set; }
+        public virtual ICollection<ChiTietVatTu> ChiTietVatTu { get; set; }
     }
 }

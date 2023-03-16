@@ -16,7 +16,7 @@ namespace BenhVienPT
     public partial class Bacsi : Form
     {
         //kết nối 
-        static String connString = @"Data Source=DESKTOP-K2D95L4\ANHLOC;Initial Catalog=WebBenhVienPT;User ID=sa;Password=123456";
+        static String connString = @"Data Source=TRANUY\SQLEXPRESS;Initial Catalog=WebBenhVienPT;User ID=sa;Password=123";
         //khai báo
         SqlConnection sqlconnection = new SqlConnection(connString);
         SqlCommand sqlcommand;
@@ -55,6 +55,9 @@ namespace BenhVienPT
 
         private void Bacsi_Load(object sender, EventArgs e)
         {
+            int idnv = NhanVien.GetIdNV(acc.Id).Id;
+
+            HienThiThongBaoChuaDoc(idnv);
             HienThiDSCaMo("");
             LoadLichLam("");
             try
@@ -90,7 +93,7 @@ namespace BenhVienPT
                     thongBaoList.Add(new Tuple<string, DateTime>($"Thông báo: bạn có ca mổ trong phòng {row["TenPhongMo"].ToString()} vào ngày {thoiDiem.ToString("dd/MM/yyyy")} vào lúc {thoiDiem.AddHours(1).ToString("HH:mm")}", thoiDiem));
                     // Tạo mail message
                     MailMessage mail = new MailMessage();
-                    mail.From = new MailAddress("ludtickets@gmail.com");
+                    mail.From = new MailAddress("quanlyphongmt@gmail.com");
                     mail.To.Add(row["Email"].ToString());
                     mail.Subject = $"Thông báo: bạn có ca mổ trong phòng {row["TenPhongMo"].ToString()} vào lúc {thoiDiem.AddHours(1).ToString("dd/MM/yyyy HH:mm")}";
                     mail.Body = $"Xin chào,\n\nBạn có ca mổ sắp tới trong phòng {row["TenPhongMo"].ToString()}.\n\nThời gian: {thoiDiem.AddHours(1).ToString("dd/MM/yyyy HH:mm")}\n\nXin vui lòng đến đúng giờ.\n\nTrân trọng,\nBộ phận phòng mổ.";
@@ -99,7 +102,7 @@ namespace BenhVienPT
                     smtp.Host = "smtp.gmail.com";
                     smtp.Port = 587;
                     smtp.UseDefaultCredentials = false;
-                    smtp.Credentials = new System.Net.NetworkCredential("ludtickets@gmail.com", "ejfrgiunzfflqaxs");
+                    smtp.Credentials = new System.Net.NetworkCredential("quanlyphongmt@gmail.com", "jbmrynnksnbbqckn");
                     smtp.EnableSsl = true;
                     smtp.Send(mail);
                 }
@@ -145,11 +148,11 @@ namespace BenhVienPT
                 if (day == "")
                 {
 
-                    sqlcommand.CommandText = "SELECT  LT.NgayTruc, TGM.TenTGMo FROM LichTruc as LT join TGMo as TGM  on LT.MaTGMo = TGM.ID where IDNV = @idnv AND NgayTruc >= GETDATE()";
+                    sqlcommand.CommandText = "SELECT  LT.NgayTruc, TGM.TenTGMo FROM LichTruc as LT join TGMo as TGM  on LT.IDTGMo = TGM.ID where IDNV = @idnv AND NgayTruc >= CAST(GETDATE() AS DATE)";
                 }
                 else
                 {
-                    sqlcommand.CommandText = "SELECT  LT.NgayTruc, TGM.TenTGMo FROM LichTruc as LT join TGMo as TGM  on LT.MaTGMo = TGM.ID where IDNV = @idnv AND NgayTruc = '" + day + "'";
+                    sqlcommand.CommandText = "SELECT  LT.NgayTruc, TGM.TenTGMo FROM LichTruc as LT join TGMo as TGM  on LT.IDTGMo = TGM.ID where IDNV = @idnv AND NgayTruc = '" + day + "'";
                 }
                 sqlcommand.Parameters.AddWithValue("@idnv", idnv);
                 SqlDataReader reader = sqlcommand.ExecuteReader();
@@ -190,10 +193,10 @@ namespace BenhVienPT
                 sqlcommand = sqlconnection.CreateCommand();
                 if (day == "")
                 {
-                    sqlcommand.CommandText = "select DISTINCT  CM.TenCaMo, LM.Ngay, TGM.TenTGMo , PM.TenPhongMo, BA.MaBenhAn, BN.TenBN from CaMo as CM  join LichMo as LM on CM.ID = LM.IDCM join TGMo as TGM on LM.CaMo = TGM.ID join PhongMo as PM on PM.ID = CM.IDPhongMo join BenhAn as BA on BA.ID = CM.IDBenhAn join BenhNhan as BN on BA.IDBenhNhan = BN.ID where LM.IDNV = @idnv AND LM.Ngay >= CONVERT(varchar, GETDATE(), 111)";
+                    sqlcommand.CommandText = "select DISTINCT   LM.Ngay, TGM.TenTGMo , PM.TenPhongMo, BA.MaBenhAn, BN.TenBN from CaMo as CM  join LichMo as LM on CM.ID = LM.IDCM join TGMo as TGM on LM.CaMo = TGM.ID join PhongMo as PM on PM.ID = CM.IDPhongMo join BenhAn as BA on BA.ID = CM.IDBenhAn join BenhNhan as BN on BA.IDBenhNhan = BN.ID where LM.IDNV = @idnv AND LM.Ngay >= CONVERT(varchar, GETDATE(), 111)";
                 }
                 else {
-                    sqlcommand.CommandText = "select DISTINCT  CM.TenCaMo, LM.Ngay, TGM.TenTGMo , PM.TenPhongMo, BA.MaBenhAn, BN.TenBN from CaMo as CM  join LichMo as LM on CM.ID = LM.IDCM join TGMo as TGM on LM.CaMo = TGM.ID join PhongMo as PM on PM.ID = CM.IDPhongMo join BenhAn as BA on BA.ID = CM.IDBenhAn join BenhNhan as BN on BA.IDBenhNhan = BN.ID where LM.IDNV = @idnv and LM.Ngay = '" + day + "'";
+                    sqlcommand.CommandText = "select DISTINCT   LM.Ngay, TGM.TenTGMo , PM.TenPhongMo, BA.MaBenhAn, BN.TenBN from CaMo as CM  join LichMo as LM on CM.ID = LM.IDCM join TGMo as TGM on LM.CaMo = TGM.ID join PhongMo as PM on PM.ID = CM.IDPhongMo join BenhAn as BA on BA.ID = CM.IDBenhAn join BenhNhan as BN on BA.IDBenhNhan = BN.ID where LM.IDNV = @idnv and LM.Ngay = '" + day + "'";
                 }
                
                 sqlcommand.Parameters.AddWithValue("@idnv", idnv);
@@ -201,14 +204,12 @@ namespace BenhVienPT
                 liVCaMo.Items.Clear();
                 while (reader.Read())
                 {
-                    string TenCaMo = reader.GetString(0);
-                    DateTime Ngay = reader.GetDateTime(1);
-                    string TenTGMo = reader.GetString(2);
-                    string TenPhongMo = reader.GetString(3);
-                    string MaBenhAn = reader.GetString(4);
-                    string TenBenhNhan = reader.GetString(5);
-                    ListViewItem lvi = new ListViewItem(TenCaMo);
-                    lvi.SubItems.Add(Ngay.ToString("dd/MM/yyyy"));
+                    DateTime Ngay = reader.GetDateTime(0);
+                    string TenTGMo = reader.GetString(1);
+                    string TenPhongMo = reader.GetString(2);
+                    string MaBenhAn = reader.GetString(3);
+                    string TenBenhNhan = reader.GetString(4);
+                    ListViewItem lvi = new ListViewItem(Ngay.ToString("dd/MM/yyyy"));
                     lvi.SubItems.Add(TenTGMo);
                     lvi.SubItems.Add(TenPhongMo);
                     lvi.SubItems.Add(MaBenhAn);
@@ -230,5 +231,52 @@ namespace BenhVienPT
 
             HienThiDSCaMo(selectedDate.Date.ToString());
         }
+
+        private void tabPage1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            DialogResult y = MessageBox.Show("Bạn có muốn đăng xuất?", "Thông báo!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (y == DialogResult.Yes)
+            {
+                MessageBox.Show("Đăng xuất thành công!");
+                this.Hide();
+                FormDangNhap logout = new FormDangNhap();
+                logout.ShowDialog();
+                this.Close();
+            }
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void buttonTB_Click(object sender, EventArgs e)
+        {
+            int idnv = NhanVien.GetIdNV(acc.Id).Id;
+
+            ThongBao tb = new ThongBao(idnv);
+            tb.Show();
+        }
+        private void HienThiThongBaoChuaDoc(int id)
+        {
+            try
+            {
+                Openconn();
+                sqlcommand = sqlconnection.CreateCommand();
+                sqlcommand.CommandText = "select count(*) from thongbao where idnv = '" + id + "' and TrangThai = 0";
+                int count = Convert.ToInt32(sqlcommand.ExecuteScalar());
+                buttonTB.Text = "Thông báo (" + count + ")";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
     }
 }

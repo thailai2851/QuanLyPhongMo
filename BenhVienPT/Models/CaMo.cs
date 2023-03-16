@@ -11,7 +11,7 @@ namespace BenhVienPT.Models
     {
         public CaMo()
         {
-            NhanVien = new HashSet<NhanVien>();
+            LichMo = new HashSet<LichMo>();
         }
 
         public int Id { get; set; }
@@ -25,6 +25,6 @@ namespace BenhVienPT.Models
         public virtual BenhAn IdbenhAnNavigation { get; set; }
         public virtual PhongHoiTinh IdphongHoiTinhNavigation { get; set; }
         public virtual PhongMo IdphongMoNavigation { get; set; }
-        public virtual ICollection<NhanVien> NhanVien { get; set; }
+        public virtual ICollection<LichMo> LichMo { get; set; }
     }
 }

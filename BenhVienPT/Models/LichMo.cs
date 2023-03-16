@@ -7,18 +7,16 @@ using System.Collections.Generic;
 
 namespace BenhVienPT.Models
 {
-    public partial class LichTruc
+    public partial class LichMo
     {
         public int Id { get; set; }
-        public string MaLich { get; set; }
-        public DateTime? NgayTruc { get; set; }
-        public int? Idtgmo { get; set; }
+        public string MaLm { get; set; }
         public int? Idnv { get; set; }
-        public int? Idvt { get; set; }
-        public bool? TrangThai { get; set; }
+        public int? Idcm { get; set; }
+        public int? CaMo { get; set; }
+        public DateTime? Ngay { get; set; }
 
+        public virtual CaMo IdcmNavigation { get; set; }
         public virtual NhanVien IdnvNavigation { get; set; }
-        public virtual Tgmo IdtgmoNavigation { get; set; }
-        public virtual VaiTro IdvtNavigation { get; set; }
     }
 }

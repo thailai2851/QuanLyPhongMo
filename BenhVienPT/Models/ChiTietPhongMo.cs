@@ -7,18 +7,15 @@ using System.Collections.Generic;
 
 namespace BenhVienPT.Models
 {
-    public partial class VatTuYte
+    public partial class ChiTietPhongMo
     {
-        public VatTuYte()
-        {
-            ChiTietVatTu = new HashSet<ChiTietVatTu>();
-        }
-
         public int Id { get; set; }
-        public string MaVt { get; set; }
-        public string TenVt { get; set; }
+        public int? Idpm { get; set; }
+        public int? Idtgm { get; set; }
         public bool? TrangThai { get; set; }
+        public DateTime? Ngay { get; set; }
 
-        public virtual ICollection<ChiTietVatTu> ChiTietVatTu { get; set; }
+        public virtual PhongMo IdpmNavigation { get; set; }
+        public virtual Tgmo IdtgmNavigation { get; set; }
     }
 }

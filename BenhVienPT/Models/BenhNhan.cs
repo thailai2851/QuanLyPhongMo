@@ -21,8 +21,6 @@ namespace BenhVienPT.Models
         public DateTime? NgaySinh { get; set; }
         public string DiaChi { get; set; }
         public string Sdt { get; set; }
-        public string ChieuCao { get; set; }
-        public string CanNang { get; set; }
 
         public virtual ICollection<BenhAn> BenhAn { get; set; }
     }

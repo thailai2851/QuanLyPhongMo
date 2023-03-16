@@ -1,6 +1,6 @@
 ﻿using BenhVienPT.Models;
 using Microsoft.Data.SqlClient;
-using OfficeOpenXml;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,14 +14,12 @@ using System.Media;
 using System.Net.Mail;
 using System.Text;
 using System.Windows.Forms;
-using Vonage;
-using Vonage.Request;
-
-
-
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using System.Text.RegularExpressions;
+using OfficeOpenXml;
+using ClosedXML.Excel;
+using System.Diagnostics;
 using LicenseContext = OfficeOpenXml.LicenseContext;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace BenhVienPT
 {
@@ -64,9 +62,13 @@ namespace BenhVienPT
 
         private void FormNVVTYT_Load(object sender, EventArgs e)
         {
-
+            DateTime selectedDate = dateTimestart.Value.Date;
+            string formattedDate = selectedDate.ToString("yyyy-MM-dd");
+            DateTime selectedDate1 = dateTimeend.Value.Date;
+            string formattedDate1 = selectedDate1.ToString("yyyy-MM-dd");
             LoadLichLam("");
             HienThiDSP();
+            HienThiChiTietVatTu(formattedDate, formattedDate);
             try
             {
                 Openconn();
@@ -110,22 +112,10 @@ namespace BenhVienPT
                     smtp.Host = "smtp.gmail.com";
                     smtp.Port = 587;
                     smtp.UseDefaultCredentials = false;
-                    smtp.Credentials = new System.Net.NetworkCredential("ludtickets@gmail.com", "ejfrgiunzfflqaxs");
+                    smtp.Credentials = new System.Net.NetworkCredential("quanlyphongmt@gmail.com", "jbmrynnksnbbqckn");
                     smtp.EnableSsl = true;
                     smtp.Send(mail);
-                    /*/Gửi SMS
-                    /var credentials = Credentials.FromApiKeyAndSecret(
-                        "82da7a9a",
-                        "ikGrPZh5mxTauyPZ"
-                        );
-
-                    var VonageClient = new VonageClient(credentials);
-                    var response = VonageClient.SmsClient.SendAnSms(new Vonage.Messaging.SendSmsRequest()
-                    {
-                        To = "84786126493",
-                        From = "Vonage APIs",
-                        Text = $"Xin chào,\n\nBạn có ca mổ sắp tới trong phòng {row["TenPhongMo"].ToString()}.\n\nThời gian: {thoiDiem.AddHours(1).ToString("dd/MM/yyyy HH:mm")}\n\nXin vui lòng đến đúng giờ.\n\nTrân trọng,\nBộ phận phòng mổ."
-                });*/
+                    
 
 
                 }
@@ -171,7 +161,7 @@ namespace BenhVienPT
 
 
 
-        public FormNVVTYT(Models.TaiKhoan acc,Models.NhanVien nhanvien)
+        public FormNVVTYT(Models.TaiKhoan acc)
         {
             InitializeComponent();
             this.acc = acc;
@@ -190,14 +180,17 @@ namespace BenhVienPT
             {
                 Openconn();
                 sqlcommand = sqlconnection.CreateCommand();
-                sqlcommand.CommandText = "SELECT pm.id, pm.maphongmo, pm.tenphongmo, " +
-                    "CASE WHEN ctv.idphongmo IS NULL THEN 'False' ELSE 'True' END AS trangthai, pm.loai, pm.idtgm " +
-                    "FROM phongmo pm " +
-                    "LEFT JOIN ( " +
-                    "SELECT DISTINCT idphongmo, ngay " +
-                    "FROM chitietvattu " +
-                    "WHERE ngay = '" + formattedDate + "' " +
-                    ") ctv ON pm.id = ctv.idphongmo order by MaPhongMo , idtgm";
+                sqlcommand.CommandText = "SELECT DISTINCT p.id, p.MaPhongMo, p.tenphongmo, " +
+    "CASE WHEN ctv.IDPM IS NOT NULL AND ctv.IDTGM IS NOT NULL THEN 'True' ELSE 'False' END AS trangthai, " +
+    "p.Loai, pm.idtgmo " +
+    "FROM phongmokt pm " +
+    "INNER JOIN PhongMo p ON p.ID = pm.IDPhongMo " +
+    "LEFT JOIN ( " +
+        "SELECT DISTINCT idpm, IDTGM, ngay " +
+        "FROM ChiTietPhongMo " +
+        "WHERE ngay = '"+formattedDate+"' " +
+    ") ctv ON p.id = ctv.IDPM AND pm.idtgmo = ctv.IDTGM " +
+    "ORDER BY TenPhongMo, IDTGMo;";
 
 
                 SqlDataReader reader = sqlcommand.ExecuteReader();
@@ -240,13 +233,27 @@ namespace BenhVienPT
         }
         private void HienThiDSP()
         {
+            WebBenhVienPTContext context = new WebBenhVienPTContext();
+
+            
+
             int idnv = NhanVien.GetIdNV(acc.Id).Id;
             textBoxidnv.Text = idnv.ToString();
             try
             {
                 Openconn();
                 sqlcommand = sqlconnection.CreateCommand();
-                sqlcommand.CommandText = "SELECT pm.id, pm.maphongmo, pm.tenphongmo, \r\n       CASE WHEN ctv.idphongmo IS NULL THEN 'False' ELSE 'True' END AS trangthai,pm.loai,pm.idtgm\r\nFROM phongmo pm\r\nLEFT JOIN (\r\n    SELECT DISTINCT idphongmo, ngay \r\n    FROM chitietvattu \r\n    WHERE ngay = CAST(GETDATE() AS DATE)\r\n) ctv ON pm.id = ctv.idphongmo order by MaPhongMo , idtgm";
+                sqlcommand.CommandText = "SELECT DISTINCT p.id, p.MaPhongMo, p.tenphongmo, " +
+    "CASE WHEN ctv.IDPM IS NOT NULL AND ctv.IDTGM IS NOT NULL THEN 'True' ELSE 'False' END AS trangthai, " +
+    "p.Loai, pm.idtgmo " +
+    "FROM phongmokt pm " +
+    "INNER JOIN PhongMo p ON p.ID = pm.IDPhongMo " +
+    "LEFT JOIN ( " +
+        "SELECT DISTINCT idpm, IDTGM, ngay " +
+        "FROM ChiTietPhongMo " +
+        "WHERE ngay = CAST(GETDATE() AS DATE) " +
+    ") ctv ON p.id = ctv.IDPM AND pm.idtgmo = ctv.IDTGM " +
+    "ORDER BY TenPhongMo, IDTGMo;";
                 SqlDataReader reader = sqlcommand.ExecuteReader();
                 listP.Items.Clear();
                 while (reader.Read())
@@ -322,9 +329,16 @@ namespace BenhVienPT
             bool isChecked_Dao = checkBoxDao.Checked;
             bool isChecked_Keo = checkBoxKeo.Checked;
             bool checkgt = checkboxGT.Checked;
+            bool checkc = checkBoxC.Checked;
+            bool checkk = checkBoxK.Checked;
             int slk = Convert.ToInt32(SLKeo.Value);
             int sld = Convert.ToInt32(SLD.Value);
             int slden = Convert.ToInt32(SLDao.Value);
+            int slgt = Convert.ToInt32(SLGT.Value);
+            int slc = Convert.ToInt32(SLC.Value);
+            int slkim = Convert.ToInt32(SLK.Value);
+
+
             string trangthai = listP.SelectedItems[0].SubItems[4].Text;
             DateTime selectedDate = dateTimePicker1.Value.Date;
             string formattedDate = selectedDate.ToString("yyyy-MM-dd");
@@ -335,7 +349,7 @@ namespace BenhVienPT
             {
                 MessageBox.Show("đã xác nhận");
             }else
-            if (isChecked_Den && isChecked_Dao && isChecked_Keo && checkgt)
+            if (isChecked_Den && isChecked_Dao && isChecked_Keo && checkgt&& checkc && checkk)
             {
                 try
                 {
@@ -363,6 +377,24 @@ namespace BenhVienPT
                         sqlcommand.CommandText = "SELECT ID FROM vattuyte WHERE tenvt like N'%kéo%'";
                         int id_Keo = (int)sqlcommand.ExecuteScalar();
                         data.Add(new Tuple<int, int,int>(idp, id_Keo,slk));
+                    }
+                    if (checkgt)
+                    {
+                        sqlcommand.CommandText = "SELECT ID FROM vattuyte WHERE tenvt like N'%Băng%'";
+                        int id_Keo = (int)sqlcommand.ExecuteScalar();
+                        data.Add(new Tuple<int, int, int>(idp, id_Keo, slgt));
+                    }
+                    if (checkc)
+                    {
+                        sqlcommand.CommandText = "SELECT ID FROM vattuyte WHERE tenvt like N'%chỉ%'";
+                        int id_Keo = (int)sqlcommand.ExecuteScalar();
+                        data.Add(new Tuple<int, int, int>(idp, id_Keo, slc));
+                    }
+                    if (checkgt)
+                    {
+                        sqlcommand.CommandText = "SELECT ID FROM vattuyte WHERE tenvt like N'%kìm%'";
+                        int id_Keo = (int)sqlcommand.ExecuteScalar();
+                        data.Add(new Tuple<int, int, int>(idp, id_Keo, slk));
                     }
                     //thêm giá trị cho bảng chitietphongmo
                     sqlcommand.CommandText = "INSERT INTO chitietphongmo (IDPM, IDTGM, TrangThai, ngay) VALUES (@idpm, @idtgm, 'False', @ngay)";
@@ -400,6 +432,13 @@ namespace BenhVienPT
                     checkBoxDen.Checked = false;
                     checkBoxKeo.Checked = false;
                     checkboxGT.Checked = false;
+                    checkBoxK.Checked = false;
+
+                    checkBoxK.Checked = false;
+                    checkBoxAll.Checked = false;
+
+
+
                     HienThiDSP_1();
                 }
                 catch (Exception ex)
@@ -427,15 +466,18 @@ namespace BenhVienPT
             {
                 Openconn();
                 sqlcommand = sqlconnection.CreateCommand();
-                sqlcommand.CommandText = "SELECT pm.id, pm.maphongmo, pm.tenphongmo, " +
-                    "CASE WHEN ctv.idphongmo IS NULL THEN 'False' ELSE 'True' END AS trangthai, pm.loai, pm.idtgm " +
-                    "FROM phongmo pm " +
-                    "LEFT JOIN ( " +
-                    "SELECT DISTINCT idphongmo, ngay " +
-                    "FROM chitietvattu " +
-                    "WHERE ngay = '" + formattedDate + "' " +
-                    ") ctv ON pm.id = ctv.idphongmo order by MaPhongMo , idtgm";
-                
+                sqlcommand.CommandText = "SELECT DISTINCT p.id, p.MaPhongMo, p.tenphongmo, " +
+    "CASE WHEN ctv.IDPM IS NOT NULL AND ctv.IDTGM IS NOT NULL THEN 'True' ELSE 'False' END AS trangthai, " +
+    "p.Loai, pm.idtgmo " +
+    "FROM phongmokt pm " +
+    "INNER JOIN PhongMo p ON p.ID = pm.IDPhongMo " +
+    "LEFT JOIN ( " +
+        "SELECT DISTINCT idpm, IDTGM, ngay " +
+        "FROM ChiTietPhongMo " +
+        "WHERE ngay = '" + formattedDate + "' " +
+    ") ctv ON p.id = ctv.IDPM AND pm.idtgmo = ctv.IDTGM " +
+    "ORDER BY TenPhongMo, IDTGMo;";
+
 
                 SqlDataReader reader = sqlcommand.ExecuteReader();
                 listP.Items.Clear();
@@ -530,81 +572,121 @@ namespace BenhVienPT
 
         private void button3_Click(object sender, EventArgs e)
         {
-            // Cấu hình các thuộc tính cho OpenFileDialog
-            openFileDialog1.Title = "Chọn một file";
-            openFileDialog1.Filter = "Excel Files (*.xlsx)|*.xlsx";
-            try
-            {
+            //// Cấu hình các thuộc tính cho OpenFileDialog
+            //openFileDialog1.Title = "Chọn một file";
+            //openFileDialog1.Filter = "Excel Files (*.xlsx)|*.xlsx";
+            //try
+            //{
 
 
-                // Hiển thị OpenFileDialog và kiểm tra xem người dùng đã chọn tệp tin hay chưa
-                if (openFileDialog1.ShowDialog() == DialogResult.OK)
-                {
-                    // Lấy đường dẫn đến tệp tin được chọn
-                    string filePath = openFileDialog1.FileName;
-                    WebBenhVienPTContext context = new WebBenhVienPTContext();
-                    ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-                    using (var package = new ExcelPackage(new FileInfo(filePath)))
-                    {
-                        var worksheet = package.Workbook.Worksheets[1];
-                        var rows = worksheet.Dimension.Rows;
-                        var columns = worksheet.Dimension.Columns;
+            //    // Hiển thị OpenFileDialog và kiểm tra xem người dùng đã chọn tệp tin hay chưa
+            //    if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            //    {
+            //        // Lấy đường dẫn đến tệp tin được chọn
+            //        string filePath = openFileDialog1.FileName;
+            //        WebBenhVienPTContext context = new WebBenhVienPTContext();
+            //        ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            //        using (var package = new ExcelPackage(new FileInfo(filePath)))
+            //        {
+            //            var worksheet = package.Workbook.Worksheets[1];
+            //            var rows = worksheet.Dimension.Rows;
+            //            var columns = worksheet.Dimension.Columns;
 
-                        for (int row = 2; row <= rows; row++) // Skip header row
-                        {
-                            var record = new BenhAn();
+            //            for (int row = 2; row <= rows; row++) // Skip header row
+            //            {
+            //                var record = new BenhAn();
 
-                            for (int column = 1; column <= columns; column++)
-                            {
-                                var cellValue = worksheet.Cells[row, column].Value;
+            //                for (int column = 1; column <= columns; column++)
+            //                {
+            //                    var cellValue = worksheet.Cells[row, column].Value;
 
-                                switch (column)
-                                {
-                                    case 1:
-                                        record.MaBenhAn = (string)cellValue;
-                                        break;
-                                    case 2:
-                                        record.IdbenhNhan = (int)cellValue;
-                                        break;
-                                    case 3:
-                                        record.Idnv = (int)cellValue;
-                                        break;
-                                    case 4:
-                                        record.GhiChu = (string)cellValue;
-                                        break;
-                                    case 5:
-                                        record.TrangThai = (Boolean)cellValue;
-                                        break;
-                                    case 6:
-                                        record.Ylenh = (string)cellValue;
-                                        break;
-                                    case 7:
-                                        record.TrangThaiSauMo = (Boolean)cellValue;
-                                        break;
+            //                    switch (column)
+            //                    {
+            //                        case 1:
+            //                            record.MaBenhAn = (string)cellValue;
+            //                            break;
+            //                        case 2:
+            //                            record.IdbenhNhan = (int)cellValue;
+            //                            break;
+            //                        case 3:
+            //                            record.Idnv = (int)cellValue;
+            //                            break;
+            //                        case 4:
+            //                            record.GhiChu = (string)cellValue;
+            //                            break;
+            //                        case 5:
+            //                            record.TrangThai = (Boolean)cellValue;
+            //                            break;
+            //                        case 6:
+            //                            record.Ylenh = (string)cellValue;
+            //                            break;
+            //                        case 7:
+            //                            record.TrangThaiSauMo = (Boolean)cellValue;
+            //                            break;
 
-                                }
-                            }
+            //                    }
+            //                }
 
-                            // Add the record to your database
-                            context.BenhAn.Add(record);
-                        }
+            //                // Add the record to your database
+            //                context.BenhAn.Add(record);
+            //            }
 
-                        context.SaveChanges();
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+            //            context.SaveChanges();
+            //        }
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.Message);
+            //}
 
 
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
+            if (textBox1.Text != "")
+            {
+                // Tạo danh sách tạm thời chứa các mục thỏa mãn điều kiện tìm kiếm
+                List<ListViewItem> matchingItems = new List<ListViewItem>();
 
+                foreach (ListViewItem item in listP.Items)
+                {
+                    if (item.SubItems[0].Text.ToLower().Contains(textBox1.Text.ToLower()) ||
+                        item.SubItems[1].Text.ToLower().Contains(textBox1.Text.ToLower()) ||
+                        item.SubItems[2].Text.ToLower().Contains(textBox1.Text.ToLower()) ||
+                        item.SubItems[3].Text.ToLower().Contains(textBox1.Text.ToLower()) ||
+                        item.SubItems[4].Text.ToLower().Contains(textBox1.Text.ToLower()) ||
+                    
+                         item.SubItems[5].Text.ToLower().Contains(textBox1.Text.ToLower()))
+                    {
+                        item.BackColor = SystemColors.Highlight;
+                        item.ForeColor = SystemColors.HighlightText;
+                        matchingItems.Add(item);
+                    }
+                }
+
+                // Loại bỏ các mục không thỏa mãn khỏi danh sách
+                listP.Items.Clear();
+                listP.Items.AddRange(matchingItems.ToArray());
+
+                if (listP.SelectedItems.Count == 1)
+                {
+                    listP.Focus();
+                }
+
+
+            }
+            else
+            {
+                RefreshAll();
+            }
         }
+        private void RefreshAll()
+        {
+            HienThiDSP();
+        }
+
         private void HienThiChiTietVatTu(string start,string end)
         {
             List<string> vatTuList = new List<string>();
@@ -619,7 +701,7 @@ namespace BenhVienPT
 
             // Lấy danh sách các phòng từ bảng phongmo
             List<string> phongList = new List<string>();
-            query = "SELECT id, tenphongmo FROM phongmo order by tenphongmo , idtgm desc";
+            query = "SELECT id, tenphongmo FROM phongmo order by tenphongmo";
             cmd = new SqlCommand(query, sqlconnection);
             reader = cmd.ExecuteReader();
             while (reader.Read())
@@ -652,25 +734,25 @@ namespace BenhVienPT
                 string[] phongInfo = phong.Split('-'); // Tách id và tên phòng
                 ListViewItem item = new ListViewItem(phongInfo[0].Trim()); // ID phòng
                 item.SubItems.Add(phongInfo[1].Trim()); // Tên phòng
-                query = "SELECT IDVatTuYTe, sl FROM chitietvattu INNER JOIN phongmo ON chitietvattu.IDPhongMo = phongmo.id INNER JOIN vattuyte ON chitietvattu.IDVatTuYTe = vattuyte.id WHERE phongmo.ID = @phong AND ngay >= @startDate AND ngay <= @endDate";
+                query = "SELECT IDVatTuYTe, sum(sl) FROM chitietvattu INNER JOIN phongmo ON chitietvattu.IDPhongMo = phongmo.id INNER JOIN vattuyte ON chitietvattu.IDVatTuYTe = vattuyte.id WHERE phongmo.ID = @phong AND ngay >= @startDate AND ngay <= @endDate   GROUP BY chitietvattu.IDVatTuYTe";
                 cmd = new SqlCommand(query, sqlconnection);
                 cmd.Parameters.AddWithValue("@phong", phongInfo[0].Trim());
                 cmd.Parameters.AddWithValue("@startDate", start);
                 cmd.Parameters.AddWithValue("@endDate", end);
                 reader = cmd.ExecuteReader();
-               
-                    while (reader.Read())
-                    {
-                        
-                        int vatTuIndex = vatTuList.IndexOf(reader.GetInt32(0).ToString());
 
-                        int soLuong = reader.IsDBNull(1) ? 0 : reader.GetInt32(1);
-                        ListViewItem.ListViewSubItem subItem = new ListViewItem.ListViewSubItem(item, soLuong.ToString());
-                        item.SubItems.Add(subItem);
-                    }
+                while (reader.Read())
+                {
+                    int vatTuIndex = vatTuList.IndexOf(reader.GetInt32(0).ToString());
+                    object soLuongObj = reader.GetValue(1);
+                    int soLuong = (soLuongObj == DBNull.Value) ? 0 : Convert.ToInt32(soLuongObj);
+                    ListViewItem.ListViewSubItem subItem = new ListViewItem.ListViewSubItem(item, soLuong.ToString());
+                    item.SubItems.Add(subItem);
+                }
 
 
-                
+
+
                 reader.Close();
                 listViewvattu.Items.Add(item);
             }
@@ -693,15 +775,53 @@ namespace BenhVienPT
 
         private void buttonin_Click(object sender, EventArgs e)
         {
+            using (ExcelPackage excel = new ExcelPackage())
             {
-                string sourceFile = Application.StartupPath + @"\Files\MauExcel.xlsx"; // đường dẫn tệp gốc trong dự án
-                string destFile = @"D:\MauExcel.xlsx"; // đường dẫn để lưu trữ tệp
+                // Tạo một bảng tính trong tệp Excel
+                ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
-                File.Copy(sourceFile, destFile, true); // sao chép tệp từ thư mục gốc của dự án vào đường dẫn mới
+                var worksheet = excel.Workbook.Worksheets.Add("camo");
 
-                MessageBox.Show("Tải hoàn tất, tệp đã được tải xuống trong :" + destFile); // thông báo khi tải xuống hoàn tất
+                // Lấy dữ liệu từ ListView và đưa chúng vào bảng tính Excel
+                for(int i = 0; i < listP.Items.Count; i++)
+{
+                    for (int j = 0; j < listP.Columns.Count; j++)
+                    {
+                        if (i == 0) // Thêm tên cột vào dòng đầu tiên của bảng tính
+                        {
+                            worksheet.Cells[1, j + 1].Value = listP.Columns[j].Text;
+                        }
+                        string cellValue = listP.Items[i].SubItems[j].Text;
+                        if (!string.IsNullOrEmpty(cellValue))
+                        {
+                            worksheet.Cells[i + 2, j + 1].Value = cellValue;
+                        }
+                        else
+                        {
+                            worksheet.Cells[i + 2, j + 1].Value = 0; // Hoặc "" nếu bạn muốn gán giá trị trống
+                        }
+                    }
+                }
+
+
+                // Lưu tệp Excel
+                string filePath = @"D:\BVPT\QuanLyPhongMo\excelphongmo\listphongmo.xlsx"; // Thay đổi đường dẫn tới thư mục lưu trữ của bạn
+                FileInfo excelFile = new FileInfo(filePath);
+                int stt = 1;
+
+                while (excelFile.Exists)
+                {
+                    string newFilePath = $@"D:\BVPT\QuanLyPhongMo\excelphongmo\listphongmo{stt}.xlsx";
+                    excelFile = new FileInfo(newFilePath);
+                    stt++;
+                }
+
+                excel.SaveAs(excelFile);
+                Process.Start(excelFile.FullName);
+
             }
         }
+
         private void LoadLichLam(string day)
         {
             try
@@ -712,11 +832,11 @@ namespace BenhVienPT
                 if (day == "")
                 {
 
-                    sqlcommand.CommandText = "SELECT  LT.NgayTruc, TGM.TenTGMo FROM LichTruc as LT join TGMo as TGM  on LT.MaTGMo = TGM.ID where IDNV = @idnv AND NgayTruc >= CONVERT(varchar, GETDATE(), 111)";
+                    sqlcommand.CommandText = "SELECT  LT.NgayTruc, TGM.TenTGMo FROM LichTruc as LT join TGMo as TGM  on LT.idTGMo = TGM.ID where IDNV = @idnv AND NgayTruc >= CONVERT(varchar, GETDATE(), 111)";
                 }
                 else
                 {
-                    sqlcommand.CommandText = "SELECT  LT.NgayTruc, TGM.TenTGMo FROM LichTruc as LT join TGMo as TGM  on LT.MaTGMo = TGM.ID where IDNV = @idnv AND NgayTruc = '" + day + "'";
+                    sqlcommand.CommandText = "SELECT  LT.NgayTruc, TGM.TenTGMo FROM LichTruc as LT join TGMo as TGM  on LT.idTGMo = TGM.ID where IDNV = @idnv AND NgayTruc = '" + day + "'";
                 }
                 sqlcommand.Parameters.AddWithValue("@idnv", idnv);
                 SqlDataReader reader = sqlcommand.ExecuteReader();
@@ -746,6 +866,116 @@ namespace BenhVienPT
             DateTime selectedDate = DateTime.ParseExact(dateTimePickerLT.Text, "dd/MM/yyyy", CultureInfo.InvariantCulture);
 
             LoadLichLam(selectedDate.Date.ToString());
+        }
+
+        private void DangXuat_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            DialogResult y = MessageBox.Show("Bạn có muốn đăng xuất?", "Thông báo!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (y == DialogResult.Yes)
+            {
+                MessageBox.Show("Đăng xuất thành công!");
+                this.Hide();
+                FormDangNhap logout = new FormDangNhap();
+                logout.ShowDialog();
+                this.Close();
+            }
+        }
+
+
+        private void button3_Click_1(object sender, EventArgs e)
+        {
+            using (ExcelPackage excel = new ExcelPackage())
+            {
+                // Tạo một bảng tính trong tệp Excel
+                ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+
+                var worksheet = excel.Workbook.Worksheets.Add("chitietvattu");
+
+                // Tạo một DataTable để lưu trữ dữ liệu từ ListView
+                DataTable table = new DataTable();
+                table.Columns.Add("ID");
+                table.Columns.Add("Tên phòng mổ");
+
+                // Lấy danh sách các vật tư từ ListView
+                List<string> vatTuList = new List<string>();
+                foreach (ColumnHeader header in listViewvattu.Columns)
+                {
+                    if (header.Index >= 2) // Bỏ qua hai cột đầu tiên (ID và Tên phòng mổ)
+                    {
+                        vatTuList.Add(header.Text);
+                        table.Columns.Add(header.Text);
+                    }
+                }
+
+                // Thêm dữ liệu từ ListView vào DataTable
+                foreach (ListViewItem item in listViewvattu.Items)
+                {
+                    DataRow row = table.NewRow();
+                    row["ID"] = item.SubItems[0].Text;
+                    row["Tên phòng mổ"] = item.SubItems[1].Text;
+
+                    for (int i = 2; i < item.SubItems.Count && i - 2 < vatTuList.Count; i++)
+                    {
+                        row[vatTuList[i - 2]] = item.SubItems[i].Text;
+                    }
+                    table.Rows.Add(row);
+                }
+
+                // Đưa dữ liệu từ DataTable vào bảng tính Excel
+                worksheet.Cells["A1"].LoadFromDataTable(table, true);
+
+                // Lưu tệp Excel
+                string filePath = @"D:\BVPT\QuanLyPhongMo\excelchitietvattu\chitietvattu.xlsx"; // Thay đổi đường dẫn tới thư mục lưu trữ của bạn
+                FileInfo excelFile = new FileInfo(filePath);
+                int stt = 1;
+
+                while (excelFile.Exists)
+                {
+                    string newFilePath = $@"D:\BVPT\QuanLyPhongMo\excelchitietvattu\chitietvattu{stt}.xlsx";
+                    excelFile = new FileInfo(newFilePath);
+                    stt++;
+                }
+
+                excel.SaveAs(excelFile);
+                Process.Start(excelFile.FullName);
+            }
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void checkBoxAll_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBoxAll.Checked)
+            {
+                checkBoxDen.Checked = true;
+                checkBoxDao.Checked = true;
+                checkBoxKeo.Checked = true;
+                checkBoxC.Checked = true;
+                checkBoxK.Checked = true;
+                checkboxGT.Checked = true;
+            }
+            else
+            {
+                checkBoxDen.Checked = false;
+                checkBoxDao.Checked = false;
+                checkBoxKeo.Checked = false;
+                checkBoxC.Checked = false;
+                checkBoxK.Checked = false;
+                checkboxGT.Checked = false;
+            }
+        }
+
+        private void dateTimeend_ValueChanged(object sender, EventArgs e)
+        {
+            listViewvattu.Items.Clear();
+            DateTime start = dateTimestart.Value.Date;
+            string formatstart = start.ToString("yyyy-MM-dd");
+            DateTime end = dateTimeend.Value.Date;
+            string formatend = end.ToString("yyyy-MM-dd");
+            HienThiChiTietVatTu(formatstart, formatend);
         }
     }
 }

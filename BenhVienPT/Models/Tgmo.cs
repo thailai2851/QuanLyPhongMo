@@ -9,13 +9,19 @@ namespace BenhVienPT.Models
 {
     public partial class Tgmo
     {
+        public Tgmo()
+        {
+            ChiTietPhongMo = new HashSet<ChiTietPhongMo>();
+            LichTruc = new HashSet<LichTruc>();
+        }
+
         public int Id { get; set; }
         public string MaTgmo { get; set; }
         public string TenTgmo { get; set; }
-        public DateTime? TgbatDau { get; set; }
-        public DateTime? TgketThuc { get; set; }
-        public int? IdphongMo { get; set; }
+        public TimeSpan? TgbatDau { get; set; }
+        public TimeSpan? TgketThuc { get; set; }
 
-        public virtual PhongMo IdphongMoNavigation { get; set; }
+        public virtual ICollection<ChiTietPhongMo> ChiTietPhongMo { get; set; }
+        public virtual ICollection<LichTruc> LichTruc { get; set; }
     }
 }

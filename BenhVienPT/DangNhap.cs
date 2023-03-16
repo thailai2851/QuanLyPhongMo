@@ -115,16 +115,41 @@ namespace BenhVienPT
                         this.Hide();
                       //  MessageBox.Show("Đăng nhập thành công!");
                         FormQuanLyPT form = new FormQuanLyPT(acc);
+                    FormDatLich dl = new FormDatLich(acc); 
                         form.ShowDialog();
                         this.Close();
                     }
-                    //if (acc.IdvaiTro == 2)
-                    //{
-                    //    Form4 form4 = new Form4(acc);
-                    //    form4.ShowDialog();
-                    //}
+                if (acc.IdvaiTro == 2)
+                {
+                    this.Hide();
+                    //  MessageBox.Show("Đăng nhập thành công!");
+                    Yta form = new Yta(acc);
+                    form.ShowDialog();
+                    this.Close();
                 }
+                if (acc.IdvaiTro == 3)
+                {
+                    this.Hide();
+                    //  MessageBox.Show("Đăng nhập thành công!");
+                    FormNVVTYT form = new FormNVVTYT(acc);
+                    form.ShowDialog();
+                    this.Close();
+                }
+                if (acc.IdvaiTro == 4)
+                {
+                    this.Hide();
+                    //  MessageBox.Show("Đăng nhập thành công!");
+                    Bacsi form = new Bacsi(acc);
+                    form.ShowDialog();
+                    this.Close();
+                }
+            }
             
+        }
+
+        private void FormDangNhap_Load(object sender, EventArgs e)
+        {
+
         }
     }
     

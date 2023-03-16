@@ -11,6 +11,7 @@ namespace BenhVienPT.Models
     {
         public VaiTro()
         {
+            LichTruc = new HashSet<LichTruc>();
             TaiKhoan = new HashSet<TaiKhoan>();
         }
 
@@ -18,6 +19,7 @@ namespace BenhVienPT.Models
         public string MaVt { get; set; }
         public string TenVaiTro { get; set; }
 
+        public virtual ICollection<LichTruc> LichTruc { get; set; }
         public virtual ICollection<TaiKhoan> TaiKhoan { get; set; }
     }
 }

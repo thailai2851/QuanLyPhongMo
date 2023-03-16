@@ -12,15 +12,15 @@ namespace BenhVienPT.Models
         public Benh()
         {
             ChiTietBenhAn = new HashSet<ChiTietBenhAn>();
+            ChiTietPhongBenh = new HashSet<ChiTietPhongBenh>();
         }
 
         public int Id { get; set; }
         public string MaBenh { get; set; }
         public string TenBenh { get; set; }
         public int? MucDo { get; set; }
-        public int? IdphongMo { get; set; }
 
-        public virtual PhongMo IdphongMoNavigation { get; set; }
         public virtual ICollection<ChiTietBenhAn> ChiTietBenhAn { get; set; }
+        public virtual ICollection<ChiTietPhongBenh> ChiTietPhongBenh { get; set; }
     }
 }

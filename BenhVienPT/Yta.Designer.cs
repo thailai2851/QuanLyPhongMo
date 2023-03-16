@@ -61,19 +61,20 @@ namespace BenhVienPT
             this.columnHeader1 = new System.Windows.Forms.ColumnHeader();
             this.TenTGMo = new System.Windows.Forms.ColumnHeader();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.button1 = new System.Windows.Forms.Button();
+            this.label9 = new System.Windows.Forms.Label();
             this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
             this.liVCaMo = new System.Windows.Forms.ListView();
             this.TenCaMo = new System.Windows.Forms.ColumnHeader();
-            this.Ngay = new System.Windows.Forms.ColumnHeader();
             this.columnHeader2 = new System.Windows.Forms.ColumnHeader();
             this.TenPhongMo = new System.Windows.Forms.ColumnHeader();
             this.columnHeader3 = new System.Windows.Forms.ColumnHeader();
             this.TenBN = new System.Windows.Forms.ColumnHeader();
             this.label2 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.label1 = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.label9 = new System.Windows.Forms.Label();
             this.tabCtrlHT.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -91,6 +92,7 @@ namespace BenhVienPT
             this.tabCtrlHT.Controls.Add(this.tabPage1);
             this.tabCtrlHT.Controls.Add(this.tabPage2);
             this.tabCtrlHT.Controls.Add(this.tabPage3);
+            this.tabCtrlHT.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.tabCtrlHT.Location = new System.Drawing.Point(4, 52);
             this.tabCtrlHT.Name = "tabCtrlHT";
             this.tabCtrlHT.SelectedIndex = 0;
@@ -102,10 +104,10 @@ namespace BenhVienPT
             this.tabPage1.Controls.Add(this.label3);
             this.tabPage1.Controls.Add(this.txtTimKiem);
             this.tabPage1.Controls.Add(this.groupBox1);
-            this.tabPage1.Location = new System.Drawing.Point(4, 29);
+            this.tabPage1.Location = new System.Drawing.Point(4, 31);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(1142, 603);
+            this.tabPage1.Size = new System.Drawing.Size(1142, 601);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Bệnh án";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -113,19 +115,20 @@ namespace BenhVienPT
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.label3.Location = new System.Drawing.Point(28, 39);
+            this.label3.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label3.ForeColor = System.Drawing.Color.Brown;
+            this.label3.Location = new System.Drawing.Point(253, 30);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(100, 28);
+            this.label3.Size = new System.Drawing.Size(91, 22);
             this.label3.TabIndex = 3;
-            this.label3.Text = "Tìm kiếm";
+            this.label3.Text = "Tìm kiếm:";
             // 
             // txtTimKiem
             // 
-            this.txtTimKiem.Location = new System.Drawing.Point(147, 33);
+            this.txtTimKiem.Location = new System.Drawing.Point(359, 18);
             this.txtTimKiem.Multiline = true;
             this.txtTimKiem.Name = "txtTimKiem";
-            this.txtTimKiem.Size = new System.Drawing.Size(406, 34);
+            this.txtTimKiem.Size = new System.Drawing.Size(549, 34);
             this.txtTimKiem.TabIndex = 2;
             this.txtTimKiem.TextChanged += new System.EventHandler(this.txtTimKiem_TextChanged_1);
             // 
@@ -136,9 +139,10 @@ namespace BenhVienPT
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.liVPhongHT);
             this.groupBox1.Controls.Add(this.groupBox2);
-            this.groupBox1.Location = new System.Drawing.Point(3, 103);
+            this.groupBox1.ForeColor = System.Drawing.Color.Brown;
+            this.groupBox1.Location = new System.Drawing.Point(3, 58);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(1136, 494);
+            this.groupBox1.Size = new System.Drawing.Size(1136, 537);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Danh sách bệnh án";
@@ -161,7 +165,7 @@ namespace BenhVienPT
             listViewItem1});
             this.liVPhongHT.Location = new System.Drawing.Point(3, 23);
             this.liVPhongHT.Name = "liVPhongHT";
-            this.liVPhongHT.Size = new System.Drawing.Size(605, 468);
+            this.liVPhongHT.Size = new System.Drawing.Size(605, 511);
             this.liVPhongHT.TabIndex = 2;
             this.liVPhongHT.UseCompatibleStateImageBehavior = false;
             this.liVPhongHT.View = System.Windows.Forms.View.Details;
@@ -176,23 +180,25 @@ namespace BenhVienPT
             // 
             this.TenBenhNhan.Text = "Bệnh nhân";
             this.TenBenhNhan.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.TenBenhNhan.Width = 120;
+            this.TenBenhNhan.Width = 200;
             // 
             // GhiChu
             // 
             this.GhiChu.Text = "Ghi chú";
             this.GhiChu.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.GhiChu.Width = 120;
+            this.GhiChu.Width = 200;
             // 
             // TrangThai
             // 
             this.TrangThai.Text = "Trạng thái";
+            this.TrangThai.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.TrangThai.Width = 120;
             // 
             // YLenh
             // 
             this.YLenh.Text = "Y lệnh";
-            this.YLenh.Width = 120;
+            this.YLenh.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.YLenh.Width = 200;
             // 
             // groupBox2
             // 
@@ -208,9 +214,10 @@ namespace BenhVienPT
             this.groupBox2.Controls.Add(this.label5);
             this.groupBox2.Controls.Add(this.btnSua);
             this.groupBox2.Controls.Add(this.btnLuu);
-            this.groupBox2.Location = new System.Drawing.Point(614, 23);
+            this.groupBox2.ForeColor = System.Drawing.Color.Brown;
+            this.groupBox2.Location = new System.Drawing.Point(614, 13);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(511, 468);
+            this.groupBox2.Size = new System.Drawing.Size(511, 521);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Chi tiết";
@@ -226,10 +233,10 @@ namespace BenhVienPT
             // 
             // txtTenBN
             // 
-            this.txtTenBN.Location = new System.Drawing.Point(130, 113);
+            this.txtTenBN.Location = new System.Drawing.Point(130, 108);
             this.txtTenBN.Name = "txtTenBN";
             this.txtTenBN.ReadOnly = true;
-            this.txtTenBN.Size = new System.Drawing.Size(354, 27);
+            this.txtTenBN.Size = new System.Drawing.Size(354, 30);
             this.txtTenBN.TabIndex = 2;
             // 
             // txtYLenh
@@ -237,7 +244,7 @@ namespace BenhVienPT
             this.txtYLenh.Location = new System.Drawing.Point(130, 158);
             this.txtYLenh.Name = "txtYLenh";
             this.txtYLenh.ReadOnly = true;
-            this.txtYLenh.Size = new System.Drawing.Size(354, 27);
+            this.txtYLenh.Size = new System.Drawing.Size(354, 30);
             this.txtYLenh.TabIndex = 2;
             // 
             // txtMaBA
@@ -245,65 +252,77 @@ namespace BenhVienPT
             this.txtMaBA.Location = new System.Drawing.Point(130, 58);
             this.txtMaBA.Name = "txtMaBA";
             this.txtMaBA.ReadOnly = true;
-            this.txtMaBA.Size = new System.Drawing.Size(354, 27);
+            this.txtMaBA.Size = new System.Drawing.Size(354, 30);
             this.txtMaBA.TabIndex = 2;
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(33, 161);
+            this.label8.ForeColor = System.Drawing.Color.Black;
+            this.label8.Location = new System.Drawing.Point(15, 165);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(49, 20);
+            this.label8.Size = new System.Drawing.Size(67, 22);
             this.label8.TabIndex = 1;
-            this.label8.Text = "Y lệnh";
+            this.label8.Text = "Y lệnh:";
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(33, 113);
+            this.label6.ForeColor = System.Drawing.Color.Black;
+            this.label6.Location = new System.Drawing.Point(15, 113);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(78, 20);
+            this.label6.Size = new System.Drawing.Size(97, 22);
             this.label6.TabIndex = 1;
-            this.label6.Text = "Bệnh nhân";
+            this.label6.Text = "Bệnh nhân:";
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(37, 215);
+            this.label7.ForeColor = System.Drawing.Color.Black;
+            this.label7.Location = new System.Drawing.Point(15, 217);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(58, 20);
+            this.label7.Size = new System.Drawing.Size(78, 22);
             this.label7.TabIndex = 1;
-            this.label7.Text = "Ghi chú";
+            this.label7.Text = "Ghi chú:";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(33, 58);
+            this.label5.ForeColor = System.Drawing.Color.Black;
+            this.label5.Location = new System.Drawing.Point(15, 61);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(62, 20);
+            this.label5.Size = new System.Drawing.Size(79, 22);
             this.label5.TabIndex = 1;
-            this.label5.Text = "Bệnh án";
+            this.label5.Text = "Bệnh án:";
             // 
             // btnSua
             // 
             this.btnSua.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSua.Location = new System.Drawing.Point(87, 431);
+            this.btnSua.BackColor = System.Drawing.Color.LightSeaGreen;
+            this.btnSua.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnSua.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnSua.ForeColor = System.Drawing.Color.White;
+            this.btnSua.Location = new System.Drawing.Point(130, 432);
             this.btnSua.Name = "btnSua";
-            this.btnSua.Size = new System.Drawing.Size(94, 29);
+            this.btnSua.Size = new System.Drawing.Size(115, 67);
             this.btnSua.TabIndex = 0;
             this.btnSua.Text = "Chỉnh sửa";
-            this.btnSua.UseVisualStyleBackColor = true;
+            this.btnSua.UseVisualStyleBackColor = false;
             this.btnSua.Click += new System.EventHandler(this.btnSua_Click);
             // 
             // btnLuu
             // 
             this.btnLuu.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnLuu.Location = new System.Drawing.Point(365, 431);
+            this.btnLuu.BackColor = System.Drawing.Color.LightSeaGreen;
+            this.btnLuu.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnLuu.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnLuu.ForeColor = System.Drawing.Color.White;
+            this.btnLuu.Location = new System.Drawing.Point(372, 432);
             this.btnLuu.Name = "btnLuu";
-            this.btnLuu.Size = new System.Drawing.Size(94, 29);
+            this.btnLuu.Size = new System.Drawing.Size(112, 67);
             this.btnLuu.TabIndex = 0;
             this.btnLuu.Text = "Lưu";
-            this.btnLuu.UseVisualStyleBackColor = true;
+            this.btnLuu.UseVisualStyleBackColor = false;
             this.btnLuu.Click += new System.EventHandler(this.btnLuu_Click);
             // 
             // tabPage2
@@ -311,10 +330,10 @@ namespace BenhVienPT
             this.tabPage2.Controls.Add(this.dtpngaytruc);
             this.tabPage2.Controls.Add(this.label4);
             this.tabPage2.Controls.Add(this.liVlichLV);
-            this.tabPage2.Location = new System.Drawing.Point(4, 29);
+            this.tabPage2.Location = new System.Drawing.Point(4, 31);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(1142, 603);
+            this.tabPage2.Size = new System.Drawing.Size(1142, 601);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Lịch làm việc";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -323,20 +342,22 @@ namespace BenhVienPT
             // 
             this.dtpngaytruc.CustomFormat = "dd/MM/yyyy";
             this.dtpngaytruc.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtpngaytruc.Location = new System.Drawing.Point(131, 30);
+            this.dtpngaytruc.Location = new System.Drawing.Point(213, 31);
             this.dtpngaytruc.Name = "dtpngaytruc";
-            this.dtpngaytruc.Size = new System.Drawing.Size(250, 27);
+            this.dtpngaytruc.Size = new System.Drawing.Size(289, 30);
             this.dtpngaytruc.TabIndex = 3;
+            this.dtpngaytruc.Value = new System.DateTime(2023, 3, 16, 0, 0, 0, 0);
             this.dtpngaytruc.ValueChanged += new System.EventHandler(this.dtpngaytruc_ValueChanged);
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(46, 37);
+            this.label4.ForeColor = System.Drawing.Color.Brown;
+            this.label4.Location = new System.Drawing.Point(94, 37);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(79, 20);
+            this.label4.Size = new System.Drawing.Size(98, 22);
             this.label4.TabIndex = 2;
-            this.label4.Text = "Chọn ngày";
+            this.label4.Text = "Chọn ngày:";
             // 
             // liVlichLV
             // 
@@ -351,7 +372,7 @@ namespace BenhVienPT
             this.liVlichLV.HideSelection = false;
             this.liVlichLV.Location = new System.Drawing.Point(4, 89);
             this.liVlichLV.Name = "liVlichLV";
-            this.liVlichLV.Size = new System.Drawing.Size(1132, 508);
+            this.liVlichLV.Size = new System.Drawing.Size(1132, 506);
             this.liVlichLV.TabIndex = 0;
             this.liVlichLV.UseCompatibleStateImageBehavior = false;
             this.liVlichLV.View = System.Windows.Forms.View.Details;
@@ -373,24 +394,47 @@ namespace BenhVienPT
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.button1);
             this.tabPage3.Controls.Add(this.label9);
             this.tabPage3.Controls.Add(this.dateTimePicker2);
             this.tabPage3.Controls.Add(this.liVCaMo);
-            this.tabPage3.Location = new System.Drawing.Point(4, 29);
+            this.tabPage3.Location = new System.Drawing.Point(4, 31);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(1142, 603);
+            this.tabPage3.Size = new System.Drawing.Size(1142, 601);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Ca mổ tham gia";
             this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(790, 19);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(169, 29);
+            this.button1.TabIndex = 3;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label9.ForeColor = System.Drawing.Color.Brown;
+            this.label9.Location = new System.Drawing.Point(137, 26);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(98, 22);
+            this.label9.TabIndex = 2;
+            this.label9.Text = "Chọn ngày:";
             // 
             // dateTimePicker2
             // 
             this.dateTimePicker2.CustomFormat = "dd/MM/yyyy";
             this.dateTimePicker2.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePicker2.Location = new System.Drawing.Point(217, 55);
+            this.dateTimePicker2.Location = new System.Drawing.Point(251, 22);
             this.dateTimePicker2.Name = "dateTimePicker2";
-            this.dateTimePicker2.Size = new System.Drawing.Size(250, 27);
+            this.dateTimePicker2.Size = new System.Drawing.Size(362, 30);
             this.dateTimePicker2.TabIndex = 1;
+            this.dateTimePicker2.Value = new System.DateTime(2023, 3, 16, 0, 0, 0, 0);
             this.dateTimePicker2.ValueChanged += new System.EventHandler(this.dateTimePicker2_ValueChanged_1);
             // 
             // liVCaMo
@@ -400,30 +444,23 @@ namespace BenhVienPT
             | System.Windows.Forms.AnchorStyles.Right)));
             this.liVCaMo.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.TenCaMo,
-            this.Ngay,
             this.columnHeader2,
             this.TenPhongMo,
             this.columnHeader3,
             this.TenBN});
             this.liVCaMo.GridLines = true;
             this.liVCaMo.HideSelection = false;
-            this.liVCaMo.Location = new System.Drawing.Point(5, 133);
+            this.liVCaMo.Location = new System.Drawing.Point(5, 73);
             this.liVCaMo.Name = "liVCaMo";
-            this.liVCaMo.Size = new System.Drawing.Size(1128, 464);
+            this.liVCaMo.Size = new System.Drawing.Size(1128, 522);
             this.liVCaMo.TabIndex = 0;
             this.liVCaMo.UseCompatibleStateImageBehavior = false;
             this.liVCaMo.View = System.Windows.Forms.View.Details;
             // 
             // TenCaMo
             // 
-            this.TenCaMo.Text = "Tên Ca Mổ";
-            this.TenCaMo.Width = 120;
-            // 
-            // Ngay
-            // 
-            this.Ngay.Text = "Ngày";
-            this.Ngay.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.Ngay.Width = 120;
+            this.TenCaMo.Text = "Ngày";
+            this.TenCaMo.Width = 150;
             // 
             // columnHeader2
             // 
@@ -447,7 +484,7 @@ namespace BenhVienPT
             // 
             this.TenBN.Text = "Bệnh nhân";
             this.TenBN.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.TenBN.Width = 120;
+            this.TenBN.Width = 200;
             // 
             // label2
             // 
@@ -456,7 +493,8 @@ namespace BenhVienPT
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Arial", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.label2.Location = new System.Drawing.Point(398, 8);
+            this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+            this.label2.Location = new System.Drawing.Point(397, 15);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(425, 35);
             this.label2.TabIndex = 2;
@@ -467,12 +505,26 @@ namespace BenhVienPT
             this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.Controls.Add(this.linkLabel1);
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Location = new System.Drawing.Point(4, 1);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1150, 45);
+            this.panel1.Size = new System.Drawing.Size(1150, 52);
             this.panel1.TabIndex = 1;
+            this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
+            // 
+            // linkLabel1
+            // 
+            this.linkLabel1.AutoSize = true;
+            this.linkLabel1.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point);
+            this.linkLabel1.Location = new System.Drawing.Point(1024, 26);
+            this.linkLabel1.Name = "linkLabel1";
+            this.linkLabel1.Size = new System.Drawing.Size(94, 22);
+            this.linkLabel1.TabIndex = 3;
+            this.linkLabel1.TabStop = true;
+            this.linkLabel1.Text = "Đăng xuất";
+            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
             // label1
             // 
@@ -482,24 +534,15 @@ namespace BenhVienPT
             this.label1.Size = new System.Drawing.Size(0, 20);
             this.label1.TabIndex = 0;
             // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.label9.Location = new System.Drawing.Point(103, 59);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(95, 23);
-            this.label9.TabIndex = 2;
-            this.label9.Text = "Chọn ngày";
-            // 
-            // Form4
+            // Yta
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1153, 690);
             this.Controls.Add(this.tabCtrlHT);
             this.Controls.Add(this.panel1);
-            this.Name = "Form4";
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.Name = "Yta";
             this.Text = "Form4";
             this.Load += new System.EventHandler(this.Form4_Load_1);
             this.tabCtrlHT.ResumeLayout(false);
@@ -557,11 +600,12 @@ namespace BenhVienPT
         private System.Windows.Forms.ListView liVCaMo;
         private System.Windows.Forms.DateTimePicker dateTimePicker2;
         private System.Windows.Forms.ColumnHeader TenCaMo;
-        private System.Windows.Forms.ColumnHeader Ngay;
         private System.Windows.Forms.ColumnHeader columnHeader2;
         private System.Windows.Forms.ColumnHeader TenPhongMo;
         private System.Windows.Forms.ColumnHeader columnHeader3;
         private System.Windows.Forms.ColumnHeader TenBN;
         private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.LinkLabel linkLabel1;
+        private System.Windows.Forms.Button button1;
     }
 }

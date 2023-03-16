@@ -31,9 +31,11 @@ namespace BenhVienPT
         {
             this.components = new System.ComponentModel.Container();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.label1 = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.buttonTB = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
             this.liVCaMo = new System.Windows.Forms.ListView();
@@ -42,7 +44,6 @@ namespace BenhVienPT
             this.TenTGMo = new System.Windows.Forms.ColumnHeader();
             this.TenPhongMo = new System.Windows.Forms.ColumnHeader();
             this.MaBenhAn = new System.Windows.Forms.ColumnHeader();
-            this.TenBN = new System.Windows.Forms.ColumnHeader();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.label2 = new System.Windows.Forms.Label();
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
@@ -62,11 +63,25 @@ namespace BenhVienPT
             this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.Controls.Add(this.linkLabel1);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Location = new System.Drawing.Point(0, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(973, 200);
+            this.panel1.Size = new System.Drawing.Size(986, 313);
             this.panel1.TabIndex = 0;
+            this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
+            // 
+            // linkLabel1
+            // 
+            this.linkLabel1.AutoSize = true;
+            this.linkLabel1.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point);
+            this.linkLabel1.Location = new System.Drawing.Point(881, 19);
+            this.linkLabel1.Name = "linkLabel1";
+            this.linkLabel1.Size = new System.Drawing.Size(94, 22);
+            this.linkLabel1.TabIndex = 1;
+            this.linkLabel1.TabStop = true;
+            this.linkLabel1.Text = "Đăng xuất";
+            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
             // label1
             // 
@@ -74,12 +89,13 @@ namespace BenhVienPT
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.label1.Location = new System.Drawing.Point(381, 6);
+            this.label1.Font = new System.Drawing.Font("Times New Roman", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+            this.label1.Location = new System.Drawing.Point(385, 6);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(197, 41);
+            this.label1.Size = new System.Drawing.Size(252, 35);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Lịch làm việc";
+            this.label1.Text = "LỊCH LÀM VIỆC";
             // 
             // tabControl1
             // 
@@ -88,43 +104,58 @@ namespace BenhVienPT
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Location = new System.Drawing.Point(0, 61);
+            this.tabControl1.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.tabControl1.Location = new System.Drawing.Point(0, 47);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(973, 539);
+            this.tabControl1.Size = new System.Drawing.Size(986, 553);
             this.tabControl1.TabIndex = 1;
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.buttonTB);
             this.tabPage1.Controls.Add(this.label3);
             this.tabPage1.Controls.Add(this.dateTimePicker2);
             this.tabPage1.Controls.Add(this.liVCaMo);
-            this.tabPage1.Location = new System.Drawing.Point(4, 29);
+            this.tabPage1.Location = new System.Drawing.Point(4, 31);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(965, 506);
+            this.tabPage1.Size = new System.Drawing.Size(978, 518);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Ca mổ tham gia";
             this.tabPage1.UseVisualStyleBackColor = true;
+            this.tabPage1.Click += new System.EventHandler(this.tabPage1_Click);
+            // 
+            // buttonTB
+            // 
+            this.buttonTB.Location = new System.Drawing.Point(737, 17);
+            this.buttonTB.Name = "buttonTB";
+            this.buttonTB.Size = new System.Drawing.Size(206, 29);
+            this.buttonTB.TabIndex = 3;
+            this.buttonTB.Text = "button1";
+            this.buttonTB.UseVisualStyleBackColor = true;
+            this.buttonTB.Click += new System.EventHandler(this.buttonTB_Click);
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.label3.Location = new System.Drawing.Point(71, 41);
+            this.label3.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label3.ForeColor = System.Drawing.Color.Brown;
+            this.label3.Location = new System.Drawing.Point(122, 24);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(95, 23);
+            this.label3.Size = new System.Drawing.Size(98, 22);
             this.label3.TabIndex = 2;
-            this.label3.Text = "Chọn ngày";
+            this.label3.Text = "Chọn ngày:";
             // 
             // dateTimePicker2
             // 
             this.dateTimePicker2.CustomFormat = "dd/MM/yyyy";
             this.dateTimePicker2.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePicker2.Location = new System.Drawing.Point(187, 40);
+            this.dateTimePicker2.Location = new System.Drawing.Point(235, 18);
             this.dateTimePicker2.Name = "dateTimePicker2";
-            this.dateTimePicker2.Size = new System.Drawing.Size(250, 27);
+            this.dateTimePicker2.Size = new System.Drawing.Size(357, 30);
             this.dateTimePicker2.TabIndex = 1;
+            this.dateTimePicker2.Value = new System.DateTime(2023, 3, 16, 0, 0, 0, 0);
             this.dateTimePicker2.ValueChanged += new System.EventHandler(this.dateTimePicker2_ValueChanged);
             // 
             // liVCaMo
@@ -137,61 +168,55 @@ namespace BenhVienPT
             this.Ngay,
             this.TenTGMo,
             this.TenPhongMo,
-            this.MaBenhAn,
-            this.TenBN});
+            this.MaBenhAn});
+            this.liVCaMo.FullRowSelect = true;
             this.liVCaMo.GridLines = true;
             this.liVCaMo.HideSelection = false;
-            this.liVCaMo.Location = new System.Drawing.Point(6, 104);
+            this.liVCaMo.Location = new System.Drawing.Point(6, 67);
             this.liVCaMo.Name = "liVCaMo";
-            this.liVCaMo.Size = new System.Drawing.Size(952, 392);
+            this.liVCaMo.Size = new System.Drawing.Size(965, 441);
             this.liVCaMo.TabIndex = 0;
             this.liVCaMo.UseCompatibleStateImageBehavior = false;
             this.liVCaMo.View = System.Windows.Forms.View.Details;
             // 
             // TenCaMo
             // 
-            this.TenCaMo.Text = "Tên ca mổ";
-            this.TenCaMo.Width = 120;
+            this.TenCaMo.Text = "Ngày";
+            this.TenCaMo.Width = 150;
             // 
             // Ngay
             // 
-            this.Ngay.Text = "Ngày";
+            this.Ngay.Text = "Ca mổ";
             this.Ngay.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.Ngay.Width = 120;
             // 
             // TenTGMo
             // 
-            this.TenTGMo.Text = "Ca mổ";
+            this.TenTGMo.Text = "Phòng mổ";
             this.TenTGMo.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.TenTGMo.Width = 120;
             // 
             // TenPhongMo
             // 
-            this.TenPhongMo.Text = "Phòng mổ";
+            this.TenPhongMo.Text = "Mã bệnh án";
             this.TenPhongMo.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.TenPhongMo.Width = 120;
             // 
             // MaBenhAn
             // 
-            this.MaBenhAn.Text = "Mã bệnh án";
+            this.MaBenhAn.Text = "Bệnh nhân";
             this.MaBenhAn.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.MaBenhAn.Width = 120;
-            // 
-            // TenBN
-            // 
-            this.TenBN.Text = "Bệnh nhân";
-            this.TenBN.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.TenBN.Width = 120;
+            this.MaBenhAn.Width = 200;
             // 
             // tabPage2
             // 
             this.tabPage2.Controls.Add(this.label2);
             this.tabPage2.Controls.Add(this.dateTimePicker1);
             this.tabPage2.Controls.Add(this.liVlichLV);
-            this.tabPage2.Location = new System.Drawing.Point(4, 29);
+            this.tabPage2.Location = new System.Drawing.Point(4, 31);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(965, 506);
+            this.tabPage2.Size = new System.Drawing.Size(978, 518);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Lịch làm việc";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -199,21 +224,23 @@ namespace BenhVienPT
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.label2.Location = new System.Drawing.Point(43, 21);
+            this.label2.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label2.ForeColor = System.Drawing.Color.Brown;
+            this.label2.Location = new System.Drawing.Point(108, 27);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(95, 23);
+            this.label2.Size = new System.Drawing.Size(98, 22);
             this.label2.TabIndex = 2;
-            this.label2.Text = "Chọn ngày";
+            this.label2.Text = "Chọn ngày:";
             // 
             // dateTimePicker1
             // 
             this.dateTimePicker1.CustomFormat = "dd/MM/yyyy";
             this.dateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePicker1.Location = new System.Drawing.Point(163, 21);
+            this.dateTimePicker1.Location = new System.Drawing.Point(212, 21);
             this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(250, 27);
+            this.dateTimePicker1.Size = new System.Drawing.Size(365, 30);
             this.dateTimePicker1.TabIndex = 1;
+            this.dateTimePicker1.Value = new System.DateTime(2023, 3, 16, 0, 0, 0, 0);
             this.dateTimePicker1.ValueChanged += new System.EventHandler(this.dateTimePicker1_ValueChanged);
             // 
             // liVlichLV
@@ -225,10 +252,12 @@ namespace BenhVienPT
             this.columnHeader1,
             this.columnHeader2,
             this.columnHeader3});
+            this.liVlichLV.FullRowSelect = true;
+            this.liVlichLV.GridLines = true;
             this.liVlichLV.HideSelection = false;
             this.liVlichLV.Location = new System.Drawing.Point(3, 67);
             this.liVlichLV.Name = "liVlichLV";
-            this.liVlichLV.Size = new System.Drawing.Size(959, 433);
+            this.liVlichLV.Size = new System.Drawing.Size(959, 445);
             this.liVlichLV.TabIndex = 0;
             this.liVlichLV.UseCompatibleStateImageBehavior = false;
             this.liVlichLV.View = System.Windows.Forms.View.Details;
@@ -252,9 +281,10 @@ namespace BenhVienPT
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(974, 598);
+            this.ClientSize = new System.Drawing.Size(987, 598);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.panel1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "Bacsi";
             this.Text = "Bacsi";
             this.Load += new System.EventHandler(this.Bacsi_Load);
@@ -289,8 +319,9 @@ namespace BenhVienPT
         private System.Windows.Forms.ColumnHeader TenTGMo;
         private System.Windows.Forms.ColumnHeader TenPhongMo;
         private System.Windows.Forms.ColumnHeader MaBenhAn;
-        private System.Windows.Forms.ColumnHeader TenBN;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.DateTimePicker dateTimePicker2;
+        private System.Windows.Forms.LinkLabel linkLabel1;
+        private System.Windows.Forms.Button buttonTB;
     }
 }
